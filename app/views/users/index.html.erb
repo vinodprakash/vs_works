@@ -1,0 +1,139 @@
+<p id="notice"><%= notice %></p>
+<script type="text/javascript" src="https://js.live.net/v5.0/OneDrive.js" id="onedrive-js" client-id="000000004417A433"></script>
+<h1>Listing Users</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Degree</th>
+            <th colspan="3"></th>
+        </tr>
+    </thead>
+
+    <tbody>
+    <% @users.each do |user| %>
+        <tr>
+        <td><%= user.name %></td>
+        <td><%= user.degree %></td>
+        <td><%= link_to 'Show', user %></td>
+        <td><%= link_to 'Edit', edit_user_path(user) %></td>
+        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+<% end %>
+    </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New User', new_user_path %>
+<br>
+<b> List of files Uploaded :</b>
+<br>
+<br>
+<tr>
+<% Dir.glob("public/uploads/*.jpg").each do |text| %>
+<td><%= text %></td>
+<br>
+<% end %>
+<br>
+
+<% Dir.glob("public/uploads/*.pdf").each do |text| %>
+<td><%= text %></td>
+<br>
+<% end %>
+</tr>
+
+<br>
+<br>
+
+<hr>
+
+<!--
+<form>
+    <input type="file" name="file" id="file"/>
+</form>
+<button onclick="uploadFile()" >Upload</button>
+
+<script type="text/javascript">
+
+function uploadFile() {
+
+    WL.init({ client_id: '000000004417A433', redirect_uri: 'https://onedrive.com'});
+    
+      
+        var filename = 'files.rb';
+        //var content = 'Hello, world!';
+        access_token = ''
+        WL.login({ "scope": "wl.skydrive_update" }).then(function (response) {
+            //displayDialog();
+                access_token = response.session.access_token;
+                return WL.api({path: 'me/skydrive/'});
+            }).then(function (response) {
+                var url = response.upload_location + filename + '?access_token=' + access_token;
+                var xhr = new XMLHttpRequest();
+                xhr.open('PUT', url);
+                xhr.onload = function () {
+                    alert('success:', xhr.responseText);
+                    };
+                xhr.onerror = function (error) {
+                    alert('XHR error:', xhr.responseText);
+                    };
+                xhr.send(new Blob([content]));
+                }, function (error) {
+                    alert('error:', error);
+                });
+}
+</script>
+-->
+
+
+<script type="text/javascript">
+  function launchOneDrivePicker(){
+    var pickerOptions = { /* ... */ };
+    OneDrive.open(pickerOptions);
+  }
+</script>
+
+<button onClick="launchOneDrivePicker">Open from OneDrive</button>
+
+<script type="text/javascript">
+    var pickerOptions = {
+  success: function(files) {
+    // Handle returned file object(s)
+    alert("You picked " + files.values[0].fileName);
+  },
+
+  cancel: function() {
+    // Handle when the user cancels picking a file
+  },
+  
+  error: function(e) {
+    // Handle when there is an error getting a link to the selected file
+  },
+
+  linkType: "downloadLink", // or webLink
+  multiSelect: false, // or true
+  openInNewWindow: true // or false
+}
+</script>
+<hr>
+<script type="text/javascript">
+window.onload = function() {
+    var saverOptions = { file: "file" /* ... */ };
+    var saverButton = OneDrive.createSaveButton(saverOptions);
+    document.getElementById("save").appendChild(saverButton);
+}
+</script>
+
+<input id="file" name="file" type="file" />
+<div id="save"></div>
+<script type="text/javascript">
+  function launchOneDriveSaver(){
+    var saverOptions = { file: "file" /* ... */ };
+    OneDrive.save(saverOptions);
+  }
+</script>
+
+<input id="file" name="file" type="file" />
+<button onclick="launchOneDriveSaver">Save to OneDrive</button>
