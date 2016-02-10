@@ -1,6 +1,6 @@
 == One Drive
 
-**Usage**
+==== Usage
 
         git clone https://github.com/vinodprakash/vs_works.git
         cd vs_works
@@ -8,4 +8,4 @@
         rake db:migrate
         rails s
 
-Go to **/upload/index** route to upload a file to onedrive.
+Go to /upload/index route to upload a file to onedrive.
